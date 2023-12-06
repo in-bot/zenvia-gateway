@@ -1,0 +1,25 @@
+{
+    "id": "2af6f754-eb87-49b0-9d5f-9b3c269e1dc8",
+    "timestamp": "2023-11-27T01: 32: 11.413Z",
+    "type": "MESSAGE",
+    "subscriptionId": "33c62598-eea3-4d6c-b48b-96857d03ab17",
+    "channel": "instagram",
+    "direction": "IN",
+    "message": {
+      "id": "32f878df-7e22-4f76-a220-c9b9960f8f92",
+      "from": "7107719732620600",
+      "to": "decisive-stick",
+      "direction": "IN",
+      "channel": "instagram",
+      "visitor": {
+        "name": "SGBlue Investments",
+        "picture": "https: //scontent-gru2-1.cdninstagram.com/v/t51.2885-19/40730685_1490656041036360_8249448663017848832_n.jpg?stp=dst-jpg_s200x200&_nc_cat=100&ccb=1-7&_nc_sid=c4dd86&_nc_ohc=VXScax7y5JwAX-CdMb-&_nc_ht=scontent-gru2-1.cdninstagram.com&edm=ALmAK4EEAAAA&oh=00_AfBEsiQQUjEbRJMwnRXIlg1W1J6Rdk-09vo1PF-iKNm5Pw&oe=65682489",
+        "userName": "duzao.financas"
+        },
+      "contents": [
+            ["Object"
+            ]
+        ],
+      "timestamp": "2023-11-27T01: 32: 10+00: 00"
+    }
+}
