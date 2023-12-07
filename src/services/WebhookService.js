@@ -29,7 +29,7 @@ class WebhookService {
             user_id: req.message.from,
             bot_server_type: instance.bot_server_type,
             bot_token: instance.bot_token,
-            channel: "twitter_sprinklr",
+            channel: "instagram_zenvia",
             setvar: 'setVarStr',
             session_id: sessionId,
             url_webhook: instance.url_webhook,
