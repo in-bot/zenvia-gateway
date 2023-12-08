@@ -19,11 +19,8 @@ class WebhookService {
 
         const dbUserState = await zenviaState.getStateByUserId(req.message.from, instance.bot_id);
         const dbUser = await this.createOrRetrieveState(dbUserState, instance, req)
-        console.log(new Date, JSON.stringify(dbUser));
-        let sessionId = utils.sessionGenerator(32);
-        if (dbUser !== undefined) {
-            dbUser.session_id
-        }
+        console.log(new Date, `dbUser ${JSON.stringify(dbUser)}`);
+
         let payloadInbot = {
             bot_id: instance.bot_id,
             user_id: req.message.from,
@@ -31,7 +28,7 @@ class WebhookService {
             bot_token: instance.bot_token,
             channel: "instagram_zenvia",
             setvar: 'setVarStr',
-            session_id: sessionId,
+            session_id: dbUser.session_id,
             url_webhook: instance.url_webhook,
         };
         console.log(JSON.stringify(req.message.contents))
