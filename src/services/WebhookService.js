@@ -3,7 +3,7 @@ const { ZenviaInstanceDAO } = require('../models/ZenviaInstanceDAO');
 const { ZenviaStateDAO } = require('../models/ZenviaStateDAO');
 const utils = require('../utils');
 const { ZenviaBotService } = require('./ZenviaBotService');
-const InbotService = require('./InbotService');
+const inbotService = require('./InbotService');
 
 class WebhookService {
     async getUserMessage(req, res) {
