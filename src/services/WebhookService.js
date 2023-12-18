@@ -31,26 +31,25 @@ class WebhookService {
             session_id: dbUser.session_id,
             url_webhook: instance.url_webhook,
         };
-        console.log(JSON.stringify(req.message.contents))
+        console.log(new Date(), `Contents: ${JSON.stringify(req.message.contents)}`)
         if (req.message.contents[0].type === "text") {
             payloadInbot.user_phrase = req.message.contents[0].text;
         } else {
             // Envio de arquivos
             var data = new FormData()
-            console.log(body.payload.content.attachment)
-            data.append("file-upload-anexo", body.payload.content.attachment.url);
+            data.append("file-upload-anexo", req.message.contents[0].fileUrl);
             data.append("action", "file-upload");
             data.append("bot_id", instance.bot_id);
             data.append("bot_token", instance.bot_token);
-            data.append("mime_type", body.payload.content.attachment.type);
+            data.append("mime_type", req.message.contents[0].type);
             data.append("folder", "user-files");
             data.append("session_id", sessionId);
-            data.append("user_id", body.payload.senderProfile.channelId);
+            data.append("user_id", req.message.from);
             data.append("channel", "instagram-zenvia");
-            data.append("USER_PHONE", body.payload.senderProfile.channelId);
+            data.append("USER_PHONE", req.message.from);
             const uploadFile = await inbotService.postFile(data);
-            console.log(uploadFile)
-            payloadInbot.user_phrase = "AFTER_UPLOAD " + uploadFile.url + " mime_type=" + body.payload.content.attachment.type;
+            console.log(new Date(), `UploadFile: ${uploadFile}`)
+            payloadInbot.user_phrase = "AFTER_UPLOAD " + uploadFile.url + " mime_type=" + req.message.contents[0].type;
         }
 
         console.log(new Date(), `Payload: ${JSON.stringify(payloadInbot)}`);
