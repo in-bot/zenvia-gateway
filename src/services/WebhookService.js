@@ -3,6 +3,7 @@ const { ZenviaInstanceDAO } = require('../models/ZenviaInstanceDAO');
 const { ZenviaStateDAO } = require('../models/ZenviaStateDAO');
 const utils = require('../utils');
 const { ZenviaBotService } = require('./ZenviaBotService');
+const InbotService = require('./InbotService');
 
 class WebhookService {
     async getUserMessage(req, res) {
@@ -43,7 +44,7 @@ class WebhookService {
             data.append("bot_token", instance.bot_token);
             data.append("mime_type", req.message.contents[0].type);
             data.append("folder", "user-files");
-            data.append("session_id", sessionId);
+            data.append("session_id", dbUser.session_id);
             data.append("user_id", req.message.from);
             data.append("channel", "instagram-zenvia");
             data.append("USER_PHONE", req.message.from);
