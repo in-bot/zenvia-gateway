@@ -4,6 +4,7 @@ const { ZenviaStateDAO } = require('../models/ZenviaStateDAO');
 const utils = require('../utils');
 const { ZenviaBotService } = require('./ZenviaBotService');
 const inbotService = require('./InbotService');
+const { treatEscalation } = require("./Inchat");
 
 class WebhookService {
     async getUserMessage(req, res) {
@@ -30,9 +31,17 @@ class WebhookService {
             channel: "instagram_zenvia",
             setvar: 'setVarStr',
             session_id: dbUser.session_id,
-            url_webhook: instance.url_webhook,
+            url_webhook: `https://webhooks.inbot.com.br/zenvia/v1/gateway/inchat`,//instance.url_webhook,
+            server_type: instance.bot_server_type,
+            send_to_inchat: dbUserState.send_to_inchat,
         };
-        console.log(new Date(), `Contents: ${JSON.stringify(req.message.contents)}`)
+        let url_inbot = instance.url_bot;
+        if (dbUserState.send_to_inchat) {
+            payloadInbot['action'] = 'client_to_operator';
+            url_inbot = "https://proxy1.in.bot/api";
+        }
+
+        console.log(new Date(), `Contents: ${JSON.stringify(req.message.contents)}`) 
         if (req.message.contents[0].type === "text") {
             payloadInbot.user_phrase = req.message.contents[0].text;
         } else {
@@ -55,9 +64,15 @@ class WebhookService {
 
         console.log(new Date(), `Payload: ${JSON.stringify(payloadInbot)}`);
         try {
-            await axios.post(instance.url_bot, payloadInbot).then(resp => {
-                console.log(resp.data)
-                zenviaBotService.postMessage(req, resp.data)
+            await axios.post(url_inbot, payloadInbot).then(resp => {
+                console.log(`Resposta do envio de mensagem: ${JSON.stringify(resp.data)}`)
+                if (!dbUserState.send_to_inchat) {
+                    zenviaBotService.postMessage(req, resp.data)
+                }
+                // Iniciando escalation
+                if (resp.data.escalation) {
+                    treatEscalation(resp, req, instance, dbUser);
+                }
             })
         } catch (error) { console.log(error) }
     }

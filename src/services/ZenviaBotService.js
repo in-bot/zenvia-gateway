@@ -40,11 +40,11 @@ class ZenviaBotService {
         for (const bloco of respInbot.resp) {
             const payloadZenvia = {
                 "from": body.message.to,
-                "to": body.message.from,
-                "contents": [
+                "to": body.message.from,  
+                "contents": [ 
                     {
-                        "type": "text",
-                        "text": bloco.message
+                        "type": "text", 
+                        "text": bloco.message 
                     }
                 ],
                 "conversation": {

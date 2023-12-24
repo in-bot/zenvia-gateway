@@ -59,6 +59,47 @@ class ZenviaStateDAO {
     });
   }
 
+  updateState(userId, botId,escalation) {
+    const now = new Date();
+    console.log("Eduardo "+userId+" "+botId+" "+escalation)
+    return new Promise((resolve, reject) => {
+      db.query(
+        "UPDATE zenvia_state SET last_interaction = ?, send_to_inchat = ? WHERE user_name=? AND bot_id=?",
+        [now, escalation, userId, botId],
+        (err, result) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve();
+          }
+        }
+      );
+    });
+  }
+
+  getStateBySessionId(sessionId) {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "SELECT * FROM zenvia_state WHERE session_id = ?",
+        [sessionId],
+        (error, results) => {
+          if (error) {
+            console.error("throwing error: ", error);
+            reject(error);
+          } else {
+            console.log(
+              new Date(),
+              `getStateBySessionId(${sessionId}) = ` +
+                JSON.stringify(results)
+            );
+            resolve(results); 
+          }
+        }
+      );
+    });
+  }
+
   updateUserSessionState(userId, botId, sessionId) {
     const now = new Date();
     return new Promise((resolve, reject) => {

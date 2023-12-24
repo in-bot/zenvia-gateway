@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { WebhookController } = require('../controllers/WebhookController')
+const {InchatController} = require('../controllers/InchatController')
 const version = require("../services/Version");
 
-router.get("/user",);
-router.get("/bot",);
-router.post("/bot",);
-router.get("/webhook",);
+router.post('/inchat', new InchatController().messageReceived);
+router.get('/inchat', new InchatController().messageReceived);
 router.post("/webhook", new WebhookController().getWebhookMessage);
 router.get("/version",(req, res, next) => {
     console.log(new Date(), 'Version request received', version);
