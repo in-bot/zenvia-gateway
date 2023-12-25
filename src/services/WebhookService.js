@@ -19,8 +19,9 @@ class WebhookService {
             return 'Bot não cadastrado';
         }
 
-        const dbUserState = await zenviaState.getStateByUserId(req.message.from, instance.bot_id);
+        let dbUserState = await zenviaState.getStateByUserId(req.message.from, instance.bot_id);
         const dbUser = await this.createOrRetrieveState(dbUserState, instance, req)
+        dbUserState = await zenviaState.getStateByUserId(req.message.from, instance.bot_id);
         console.log(new Date, `dbUser ${JSON.stringify(dbUser)}`);
 
         let payloadInbot = {
